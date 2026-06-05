@@ -32,7 +32,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-all duration-200",
+    "inline-flex cursor-pointer items-center justify-center gap-2 rounded-md font-medium transition-all duration-200",
     "hover:-translate-y-px active:translate-y-0 active:scale-[0.98]",
     "disabled:opacity-50 disabled:pointer-events-none disabled:transform-none",
     variants[variant],

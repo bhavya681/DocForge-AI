@@ -42,7 +42,10 @@ export function DashboardHeader({
           />
         </div>
         <ThemeToggle compact className="md:hidden" />
-        <button className="relative rounded-md p-2 text-muted transition-colors duration-200 hover:bg-subtle hover:text-foreground">
+        <button
+          type="button"
+          className="relative cursor-pointer rounded-md p-2 text-muted transition-colors duration-200 hover:bg-subtle hover:text-foreground"
+        >
           <Bell className="h-4 w-4" />
           <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-electric" />
         </button>

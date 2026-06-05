@@ -92,6 +92,22 @@ body {
   overflow-x: hidden;
 }
 
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+label[for],
+summary {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+a[href] {
+  cursor: pointer;
+}
+
 ::selection {
   background: var(--selection-bg);
   color: var(--selection-fg);

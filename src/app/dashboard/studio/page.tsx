@@ -92,7 +92,8 @@ export default function StudioPage() {
             {suggestions.map((suggestion) => (
               <button
                 key={suggestion}
-                className="w-full rounded-md border border-border p-3 text-left text-[13px] transition-colors duration-200 hover:border-electric/30 hover:bg-electric/5"
+                type="button"
+                className="w-full cursor-pointer rounded-md border border-border p-3 text-left text-[13px] transition-colors duration-200 hover:border-electric/30 hover:bg-electric/5"
               >
                 <Wand2 className="mb-2 h-4 w-4 text-electric-light" />
                 {suggestion}

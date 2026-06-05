@@ -28,9 +28,9 @@ export function Logo({
   const content = (
     <span
       className={cn(
-        "inline-flex items-center",
+        "inline-flex items-center transition-all duration-300",
         gap,
-        href && "transition-opacity duration-200 hover:opacity-80",
+        href && "cursor-pointer hover:opacity-80",
         className
       )}
     >

@@ -21,7 +21,8 @@ export function FAQ() {
             return (
               <div key={index}>
                 <button
-                  className="flex w-full items-center justify-between py-4 text-left transition-colors duration-200 hover:text-foreground/90"
+                  type="button"
+                  className="flex w-full cursor-pointer items-center justify-between py-4 text-left transition-colors duration-200 hover:text-foreground/90"
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   aria-expanded={isOpen}
                 >
