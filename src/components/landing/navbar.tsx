@@ -7,7 +7,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/shared/logo";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
-import { useTheme } from "@/components/shared/theme-provider";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -18,7 +17,6 @@ const navLinks = [
 ];
 
 export function Navbar() {
-  const { theme } = useTheme();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -89,8 +87,6 @@ export function Navbar() {
     setOpen(false);
   }, []);
 
-  const isDark = theme === "dark";
-
   return (
     <>
       {/* Scroll progress */}
@@ -117,8 +113,8 @@ export function Navbar() {
             className={cn(
               "relative flex items-center justify-between gap-3 px-4 transition-all duration-500 sm:px-5",
               scrolled
-                ? "h-12 rounded-2xl border border-border bg-background/80 shadow-[0_8px_40px_-12px_rgba(0,102,255,0.15),0_4px_24px_-8px_rgba(0,0,0,0.2)] backdrop-blur-2xl dark:shadow-[0_8px_40px_-12px_rgba(0,102,255,0.2),0_4px_24px_-8px_rgba(0,0,0,0.5)]"
-                : "h-14 rounded-none border border-transparent bg-transparent"
+                ? "h-12 rounded-2xl border border-border bg-background/95 shadow-[0_8px_40px_-12px_rgba(0,102,255,0.15),0_4px_24px_-8px_rgba(0,0,0,0.2)] backdrop-blur-2xl dark:shadow-[0_8px_40px_-12px_rgba(0,102,255,0.2),0_4px_24px_-8px_rgba(0,0,0,0.5)]"
+                : "h-14 rounded-none border border-transparent bg-background/40 backdrop-blur-sm"
             )}
           >
             {/* Subtle top accent when floating */}
@@ -138,7 +134,7 @@ export function Navbar() {
             >
               <Logo
                 size={scrolled ? "sm" : "md"}
-                showWordmark={!isDark}
+                showWordmark
                 href={null}
                 priority
               />
@@ -146,7 +142,7 @@ export function Navbar() {
 
             {/* Center nav — desktop */}
             <div className="absolute left-1/2 hidden -translate-x-1/2 md:block">
-              <div className="flex items-center gap-0.5 rounded-full border border-border/60 bg-subtle/50 p-1 backdrop-blur-sm">
+              <div className="flex items-center gap-0.5 rounded-full border border-border bg-surface-elevated/90 p-1 shadow-sm backdrop-blur-sm">
                 {navLinks.map((link) => {
                   const isActive = activeSection === link.id;
                   return (
@@ -157,8 +153,8 @@ export function Navbar() {
                       className={cn(
                         "relative cursor-pointer rounded-full px-3.5 py-1.5 text-[13px] transition-colors duration-200",
                         isActive
-                          ? "font-medium text-foreground"
-                          : "text-muted hover:text-foreground"
+                          ? "font-semibold text-foreground"
+                          : "text-foreground/60 hover:text-foreground"
                       )}
                     >
                       {isActive && (
@@ -199,7 +195,7 @@ export function Navbar() {
 
             {/* Mobile */}
             <div className="flex items-center gap-1 md:hidden">
-              <ThemeToggle compact />
+              <ThemeToggle />
               <button
                 type="button"
                 className={cn(

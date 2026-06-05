@@ -41,7 +41,7 @@ export function DashboardHeader({
             className="h-8 w-56 rounded-md border border-border bg-subtle pl-8 pr-3 text-[13px] placeholder:text-muted transition-colors duration-200 focus:border-electric/40 focus:outline-none"
           />
         </div>
-        <ThemeToggle compact className="md:hidden" />
+        <ThemeToggle className="md:hidden" />
         <button
           type="button"
           className="relative cursor-pointer rounded-md p-2 text-muted transition-colors duration-200 hover:bg-subtle hover:text-foreground"

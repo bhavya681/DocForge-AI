@@ -26,11 +26,6 @@ export const metadata: Metadata = {
     "README generator",
     "architecture diagrams",
   ],
-  icons: {
-    icon: [{ url: "/logo.png", type: "image/png", sizes: "512x512" }],
-    shortcut: "/logo.png",
-    apple: "/logo.png",
-  },
   openGraph: {
     title: "DocForge AI — Documentation That Writes Itself",
     description:
