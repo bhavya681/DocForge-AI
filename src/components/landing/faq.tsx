@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { SectionHeader } from "@/components/ui/section-header";
 import { faqs } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
@@ -9,47 +11,46 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="border-t border-white/5 bg-surface py-24">
-      <div className="mx-auto max-w-3xl px-6">
-        <div className="text-center">
-          <h2 className="text-4xl font-bold tracking-tight md:text-5xl">
-            Frequently asked questions
-          </h2>
-          <p className="mt-4 text-lg text-muted">
-            Everything you need to know about DocForge AI.
-          </p>
-        </div>
+    <section id="faq" className="border-t border-border bg-surface py-16 sm:py-24">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6">
+        <SectionHeader eyebrow="FAQ" title="Common questions." align="center" />
 
-        <div className="mt-12 space-y-3">
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className="overflow-hidden rounded-xl border border-white/10 bg-surface-elevated"
-            >
-              <button
-                className="flex w-full items-center justify-between px-6 py-4 text-left"
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-              >
-                <span className="font-medium">{faq.question}</span>
-                <ChevronDown
-                  className={cn(
-                    "h-5 w-5 shrink-0 text-muted transition-transform duration-200",
-                    openIndex === index && "rotate-180"
+        <div className="mt-10 divide-y divide-border border-y border-border sm:mt-12">
+          {faqs.map((faq, index) => {
+            const isOpen = openIndex === index;
+            return (
+              <div key={index}>
+                <button
+                  className="flex w-full items-center justify-between py-4 text-left transition-colors duration-200 hover:text-foreground/90"
+                  onClick={() => setOpenIndex(isOpen ? null : index)}
+                  aria-expanded={isOpen}
+                >
+                  <span className="pr-4 text-[15px] font-medium">{faq.question}</span>
+                  <ChevronDown
+                    className={cn(
+                      "h-4 w-4 shrink-0 text-muted transition-transform duration-200",
+                      isOpen && "rotate-180"
+                    )}
+                  />
+                </button>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <p className="pb-4 text-[13px] leading-relaxed text-muted">
+                        {faq.answer}
+                      </p>
+                    </motion.div>
                   )}
-                />
-              </button>
-              <div
-                className={cn(
-                  "overflow-hidden transition-all duration-200",
-                  openIndex === index ? "max-h-96" : "max-h-0"
-                )}
-              >
-                <p className="px-6 pb-4 text-sm leading-relaxed text-muted">
-                  {faq.answer}
-                </p>
+                </AnimatePresence>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

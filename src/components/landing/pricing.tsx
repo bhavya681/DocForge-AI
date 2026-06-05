@@ -3,60 +3,64 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { SectionHeader } from "@/components/ui/section-header";
 import { pricingPlans } from "@/lib/data";
+import { fadeUp, stagger, viewportOnce } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export function Pricing() {
   return (
-    <section id="pricing" className="py-24">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <Badge variant="info" className="mb-4">
-            Pricing
-          </Badge>
-          <h2 className="text-4xl font-bold tracking-tight md:text-5xl">
-            Simple, transparent pricing
-          </h2>
-          <p className="mt-4 text-lg text-muted">
-            Start free, upgrade when you need more. No hidden fees.
-          </p>
-        </div>
+    <section id="pricing" className="border-t border-border py-16 sm:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <SectionHeader
+          eyebrow="Pricing"
+          title="Simple, transparent pricing."
+          description="Start free. Upgrade when your team grows."
+          align="center"
+        />
 
-        <div className="mt-16 grid gap-8 lg:grid-cols-3">
-          {pricingPlans.map((plan, index) => (
+        <motion.div
+          className="mt-12 grid gap-4 sm:mt-16 sm:gap-6 lg:grid-cols-3"
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          variants={stagger}
+        >
+          {pricingPlans.map((plan) => (
             <motion.div
               key={plan.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              variants={fadeUp}
+              whileHover={{ y: -4 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
               className={cn(
-                "relative rounded-2xl border p-8",
+                "interactive-lift relative rounded-lg border p-6 sm:p-8",
                 plan.popular
-                  ? "border-electric bg-electric/5 glow-blue"
-                  : "border-white/10 bg-surface-elevated"
+                  ? "border-electric bg-electric/[0.04]"
+                  : "border-border bg-surface-elevated"
               )}
             >
               {plan.popular && (
-                <Badge variant="info" className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  Most Popular
-                </Badge>
+                <span className="absolute -top-2.5 left-6 rounded-md border border-electric/30 bg-background px-2 py-0.5 text-[11px] font-medium text-electric-light">
+                  Recommended
+                </span>
               )}
-              <h3 className="text-xl font-semibold">{plan.name}</h3>
-              <p className="mt-2 text-sm text-muted">{plan.description}</p>
+              <h3 className="text-lg font-semibold">{plan.name}</h3>
+              <p className="mt-1 text-[13px] text-muted">{plan.description}</p>
               <div className="mt-6 flex items-baseline gap-1">
-                <span className="text-5xl font-bold">
+                <span className="text-3xl font-semibold tracking-tight sm:text-4xl">
                   {plan.price === 0 ? "Free" : `$${plan.price}`}
                 </span>
                 {plan.price > 0 && (
-                  <span className="text-muted">/{plan.period}</span>
+                  <span className="text-[13px] text-muted">/{plan.period}</span>
                 )}
               </div>
               <ul className="mt-8 space-y-3">
                 {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3 text-sm">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-electric" />
+                  <li
+                    key={feature}
+                    className="flex items-start gap-2.5 text-[13px]"
+                  >
+                    <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-electric" />
                     {feature}
                   </li>
                 ))}
@@ -70,7 +74,7 @@ export function Pricing() {
               </Button>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

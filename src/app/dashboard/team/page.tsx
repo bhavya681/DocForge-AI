@@ -3,9 +3,11 @@ import {
   MoreHorizontal,
   Shield,
   UserPlus,
+  Users,
 } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/header";
-import { GlassCard } from "@/components/ui/glass-card";
+import { MetricStrip } from "@/components/dashboard/metric-strip";
+import { Panel } from "@/components/ui/panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { mockTeamMembers } from "@/lib/data";
@@ -22,90 +24,86 @@ export default function TeamPage() {
     <>
       <DashboardHeader
         title="Team Workspace"
-        description="Manage members, roles, and permissions"
+        breadcrumb="Workspace"
+        description="Members, roles, and permissions"
       />
 
-      <div className="p-8">
-        <div className="mb-8 grid gap-6 sm:grid-cols-3">
-          <GlassCard>
-            <div className="text-sm text-muted">Team Members</div>
-            <div className="mt-2 text-3xl font-bold">4</div>
-          </GlassCard>
-          <GlassCard>
-            <div className="text-sm text-muted">Repositories Shared</div>
-            <div className="mt-2 text-3xl font-bold">4</div>
-          </GlassCard>
-          <GlassCard>
-            <div className="text-sm text-muted">Pending Invites</div>
-            <div className="mt-2 text-3xl font-bold">1</div>
-          </GlassCard>
-        </div>
+      <div className="mx-auto max-w-6xl px-6 py-6 md:px-8 md:py-8">
+        <MetricStrip
+          metrics={[
+            { label: "Members", value: 4, icon: Users },
+            { label: "Repos shared", value: 4, icon: Users },
+            { label: "Pending invites", value: 1, icon: Users },
+          ]}
+        />
 
-        <GlassCard>
-          <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Members</h2>
+        <Panel className="mt-8">
+          <div className="flex items-center justify-between border-b border-border px-5 py-4">
+            <h2 className="text-[13px] font-medium">Members</h2>
             <Button size="sm">
-              <UserPlus className="h-4 w-4" />
-              Invite Member
+              <UserPlus className="h-3.5 w-3.5" />
+              Invite
             </Button>
           </div>
 
-          <div className="space-y-2">
+          <div className="hidden grid-cols-[1fr_auto_auto] gap-4 border-b border-border px-5 py-2 text-[11px] font-medium uppercase tracking-wider text-muted md:grid">
+            <span>Member</span>
+            <span>Role</span>
+            <span className="text-right">Actions</span>
+          </div>
+
+          <div className="divide-y divide-border">
             {mockTeamMembers.map((member) => (
               <div
                 key={member.id}
-                className="flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3"
+                className="flex flex-col gap-3 px-5 py-4 md:grid md:grid-cols-[1fr_auto_auto] md:items-center md:gap-4"
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-electric/20 text-sm font-medium text-electric-light">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-md border border-border text-[11px] font-medium">
                     {member.avatar}
                   </div>
                   <div>
-                    <div className="font-medium">{member.name}</div>
-                    <div className="flex items-center gap-1 text-sm text-muted">
+                    <div className="text-[13px] font-medium">{member.name}</div>
+                    <div className="flex items-center gap-1 text-[12px] text-muted">
                       <Mail className="h-3 w-3" />
                       {member.email}
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Badge variant={roleColors[member.role] || "default"}>
-                    <Shield className="mr-1 h-3 w-3" />
-                    {member.role}
-                  </Badge>
+                <Badge variant={roleColors[member.role] || "default"}>
+                  <Shield className="mr-1 h-3 w-3" />
+                  {member.role}
+                </Badge>
+                <div className="md:text-right">
                   <Button variant="ghost" size="sm">
-                    <MoreHorizontal className="h-4 w-4" />
+                    <MoreHorizontal className="h-3.5 w-3.5" />
                   </Button>
                 </div>
               </div>
             ))}
           </div>
-        </GlassCard>
+        </Panel>
 
-        <GlassCard className="mt-8">
-          <h2 className="text-lg font-semibold">Permissions</h2>
-          <p className="mt-1 text-sm text-muted">
-            Configure what each role can access in your workspace.
+        <Panel className="mt-6 p-5">
+          <h2 className="text-[13px] font-medium">Permissions</h2>
+          <p className="mt-0.5 text-[12px] text-muted">
+            Role-based access across your workspace.
           </p>
           <div className="mt-6 overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full text-[13px]">
               <thead>
-                <tr className="border-b border-white/5">
+                <tr className="border-b border-border">
                   <th className="pb-3 text-left font-medium text-muted">
                     Permission
                   </th>
-                  <th className="pb-3 text-center font-medium text-muted">
-                    Owner
-                  </th>
-                  <th className="pb-3 text-center font-medium text-muted">
-                    Admin
-                  </th>
-                  <th className="pb-3 text-center font-medium text-muted">
-                    Editor
-                  </th>
-                  <th className="pb-3 text-center font-medium text-muted">
-                    Viewer
-                  </th>
+                  {["Owner", "Admin", "Editor", "Viewer"].map((role) => (
+                    <th
+                      key={role}
+                      className="pb-3 text-center font-medium text-muted"
+                    >
+                      {role}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -117,7 +115,10 @@ export default function TeamPage() {
                   { name: "Invite members", access: [true, true, false, false] },
                   { name: "Billing access", access: [true, false, false, false] },
                 ].map((permission) => (
-                  <tr key={permission.name} className="border-b border-white/5">
+                  <tr
+                    key={permission.name}
+                    className="border-b border-border"
+                  >
                     <td className="py-3">{permission.name}</td>
                     {permission.access.map((hasAccess, i) => (
                       <td key={i} className="py-3 text-center">
@@ -133,7 +134,7 @@ export default function TeamPage() {
               </tbody>
             </table>
           </div>
-        </GlassCard>
+        </Panel>
       </div>
     </>
   );

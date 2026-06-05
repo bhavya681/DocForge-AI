@@ -1,3 +1,84 @@
+export const problemPoints = [
+  {
+    lead: "Docs drift every sprint",
+    detail: "READMEs and API refs fall behind the code they describe.",
+  },
+  {
+    lead: "Onboarding takes weeks",
+    detail: "New engineers reverse-engineer architecture from Slack threads.",
+  },
+  {
+    lead: "Knowledge lives in heads",
+    detail: "Deployment steps and auth flows aren't written down anywhere.",
+  },
+];
+
+export const solutionSteps = [
+  { step: "01", title: "Connect", detail: "OAuth to GitHub, GitLab, or Bitbucket. Read-only access." },
+  { step: "02", title: "Analyze", detail: "AI maps folder structure, routes, schemas, and dependencies." },
+  { step: "03", title: "Publish", detail: "Editable docs land in your workspace — ready to ship." },
+];
+
+export const workflowSteps = [
+  { id: "repo", label: "Git Repository", detail: "Connect via OAuth" },
+  { id: "analyze", label: "Analyze Code", detail: "Structure, APIs, schemas" },
+  { id: "generate", label: "Generate Docs", detail: "AI writes every artifact" },
+  { id: "publish", label: "Docs Studio", detail: "Edit, preview, publish" },
+];
+
+export const outputTypes = [
+  "README",
+  "API Reference",
+  "Architecture",
+  "Onboarding",
+  "Deploy Guide",
+];
+
+export const trustMetrics = [
+  { value: "2,000+", label: "Repositories documented" },
+  { value: "<60s", label: "Average generation time" },
+  { value: "SOC 2", label: "Compliance certified" },
+];
+
+export const integrations = [
+  "GitHub",
+  "GitLab",
+  "Bitbucket",
+  "Vercel",
+  "AWS",
+  "Docker",
+];
+
+export const featureDeepDives = [
+  {
+    index: "01",
+    title: "Repository Analysis",
+    headline: "Deep understanding of your codebase",
+    description:
+      "DocForge scans folder structure, dependencies, API routes, and database layers — building a complete map before writing a single line.",
+    highlights: ["GitHub", "GitLab", "Bitbucket"],
+    visual: "tree" as const,
+  },
+  {
+    index: "02",
+    title: "API Documentation",
+    headline: "Swagger-quality docs from your routes",
+    description:
+      "Endpoints, request bodies, response schemas, and auth flows — generated automatically from your source code.",
+    highlights: ["Endpoints", "Schemas", "Auth"],
+    visual: "api" as const,
+  },
+  {
+    index: "03",
+    title: "Architecture Visualizer",
+    headline: "System diagrams that stay current",
+    description:
+      "Mermaid-powered architecture, data flow, and component diagrams generated from detected services and dependencies.",
+    highlights: ["System", "Data Flow", "Mermaid"],
+    visual: "diagram" as const,
+  },
+];
+
 export const features = [
   {
     title: "Repository Analysis",

@@ -9,7 +9,7 @@ import {
   Share2,
 } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/header";
-import { GlassCard } from "@/components/ui/glass-card";
+import { Panel } from "@/components/ui/panel";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MermaidDiagram } from "@/components/shared/mermaid-diagram";
@@ -27,12 +27,13 @@ export default function ArchitecturePage() {
   return (
     <>
       <DashboardHeader
-        title="Architecture Center"
-        description="Visualize and export system architecture diagrams"
+        title="Architecture Viewer"
+        breadcrumb="Workspace"
+        description="System diagrams generated from your codebase"
         action={false}
       />
 
-      <div className="p-8">
+      <div className="mx-auto max-w-6xl px-6 py-6 md:px-8 md:py-8">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div className="flex flex-wrap gap-2">
             {diagramTypes.map((type) => {
@@ -65,7 +66,7 @@ export default function ArchitecturePage() {
 
         <div className="grid gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <GlassCard className="min-h-[500px] overflow-auto p-8">
+            <Panel className="min-h-[400px] overflow-auto p-6 md:min-h-[500px] md:p-8">
               <div className="mb-4 flex items-center gap-2">
                 <Badge variant="info">acme-api</Badge>
                 <span className="text-sm text-muted">System Architecture</span>
@@ -74,11 +75,11 @@ export default function ArchitecturePage() {
                 chart={sampleMermaid}
                 className="flex justify-center [&_svg]:max-w-full"
               />
-            </GlassCard>
+            </Panel>
           </div>
 
-          <div className="space-y-6">
-            <GlassCard>
+          <div className="space-y-4">
+            <Panel className="p-5">
               <h3 className="font-semibold">Diagram Details</h3>
               <dl className="mt-4 space-y-3 text-sm">
                 <div>
@@ -98,10 +99,10 @@ export default function ArchitecturePage() {
                   <dd className="font-medium">2</dd>
                 </div>
               </dl>
-            </GlassCard>
+            </Panel>
 
-            <GlassCard>
-              <h3 className="font-semibold">Detected Components</h3>
+            <Panel className="p-5">
+              <h3 className="text-[13px] font-medium">Detected components</h3>
               <div className="mt-4 space-y-2">
                 {[
                   "Auth Service",
@@ -113,17 +114,17 @@ export default function ArchitecturePage() {
                 ].map((component) => (
                   <div
                     key={component}
-                    className="flex items-center justify-between rounded-lg border border-white/5 px-3 py-2 text-sm"
+                    className="flex items-center justify-between rounded-md border border-border px-3 py-2 text-[13px]"
                   >
                     {component}
                     <Badge variant="success">Detected</Badge>
                   </div>
                 ))}
               </div>
-            </GlassCard>
+            </Panel>
 
-            <GlassCard>
-              <h3 className="font-semibold">Export Options</h3>
+            <Panel className="p-5">
+              <h3 className="text-[13px] font-medium">Export</h3>
               <div className="mt-4 space-y-2">
                 <Button variant="secondary" size="sm" className="w-full">
                   Export as SVG
@@ -135,7 +136,7 @@ export default function ArchitecturePage() {
                   Copy Mermaid Code
                 </Button>
               </div>
-            </GlassCard>
+            </Panel>
           </div>
         </div>
       </div>

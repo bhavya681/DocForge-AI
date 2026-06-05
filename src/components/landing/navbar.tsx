@@ -1,38 +1,35 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
-import { Menu, X, Zap } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Logo } from "@/components/shared/logo";
+import { ThemeToggle } from "@/components/shared/theme-toggle";
 
 const navLinks = [
   { href: "#features", label: "Features" },
+  { href: "#workflow", label: "Workflow" },
   { href: "#pricing", label: "Pricing" },
-  { href: "#faq", label: "FAQ" },
 ];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-white/5 bg-black/80 backdrop-blur-xl">
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-electric">
-            <Zap className="h-4 w-4 text-white" />
-          </div>
-          <span className="text-lg font-semibold tracking-tight">
-            DocForge<span className="text-electric"> AI</span>
-          </span>
-        </Link>
+    <header
+      className="fixed top-0 z-50 w-full border-b border-border backdrop-blur-md"
+      style={{ backgroundColor: "var(--nav-bg)" }}
+    >
+      <nav className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+        <Logo size="md" priority />
 
         <div className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-muted transition-colors hover:text-white"
+              className="text-[13px] text-muted transition-colors duration-200 hover:text-foreground"
             >
               {link.label}
             </a>
@@ -40,46 +37,59 @@ export function Navbar() {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle />
           <Button variant="ghost" href="/dashboard">
-            Sign In
+            Sign in
           </Button>
-          <Button href="/dashboard">Generate Documentation</Button>
+          <Button href="/dashboard">Connect repository</Button>
         </div>
 
-        <button
-          className="md:hidden text-white"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle compact />
+          <button
+            className="rounded-md p-2 text-foreground transition-colors hover:bg-subtle"
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </nav>
 
-      <div
-        className={cn(
-          "border-t border-white/5 bg-black/95 backdrop-blur-xl md:hidden",
-          open ? "block" : "hidden"
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+            className="overflow-hidden border-t border-border md:hidden"
+            style={{ backgroundColor: "var(--nav-bg)" }}
+          >
+            <div className="flex flex-col gap-4 px-4 py-4 sm:px-6">
+              {navLinks.map((link, i) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="text-[13px] text-muted hover:text-foreground"
+                  onClick={() => setOpen(false)}
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+              <div className="flex flex-col gap-2 border-t border-border pt-4">
+                <Button variant="ghost" href="/dashboard">
+                  Sign in
+                </Button>
+                <Button href="/dashboard">Connect repository</Button>
+              </div>
+            </div>
+          </motion.div>
         )}
-      >
-        <div className="flex flex-col gap-4 px-6 py-4">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm text-muted hover:text-white"
-              onClick={() => setOpen(false)}
-            >
-              {link.label}
-            </a>
-          ))}
-          <div className="flex flex-col gap-2 pt-2">
-            <Button variant="secondary" href="/dashboard">
-              Sign In
-            </Button>
-            <Button href="/dashboard">Generate Documentation</Button>
-          </div>
-        </div>
-      </div>
+      </AnimatePresence>
     </header>
   );
 }

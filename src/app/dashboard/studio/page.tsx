@@ -8,7 +8,7 @@ import {
   Wand2,
 } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/header";
-import { GlassCard } from "@/components/ui/glass-card";
+import { Panel } from "@/components/ui/panel";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { sampleMarkdown } from "@/lib/data";
@@ -27,14 +27,15 @@ export default function StudioPage() {
   return (
     <>
       <DashboardHeader
-        title="Documentation Studio"
-        description="Edit, preview, and enhance your generated documentation"
+        title="Docs Studio"
+        breadcrumb="Workspace"
+        description="Edit, preview, and enhance generated documentation"
         action={false}
       />
 
-      <div className="flex h-[calc(100vh-89px)]">
-        <div className="flex flex-1 flex-col border-r border-white/5">
-          <div className="flex items-center justify-between border-b border-white/5 px-4 py-3">
+      <div className="flex min-h-[calc(100dvh-8rem)] flex-col lg:h-[calc(100dvh-5.5rem)] lg:flex-row">
+        <div className="flex min-h-[420px] flex-1 flex-col border-b border-border lg:min-h-0 lg:border-b-0 lg:border-r">
+          <div className="flex items-center justify-between border-b border-border px-4 py-3">
             <div className="flex items-center gap-2">
               <Badge variant="info">acme-api</Badge>
               <span className="text-sm text-muted">README.md</span>
@@ -56,9 +57,9 @@ export default function StudioPage() {
             </div>
           </div>
 
-          <div className="flex flex-1 overflow-hidden">
-            <div className={`flex flex-col ${showPreview ? "w-1/2" : "w-full"}`}>
-              <div className="border-b border-white/5 px-4 py-2 text-xs font-medium uppercase tracking-wider text-muted">
+          <div className="flex flex-1 flex-col overflow-hidden lg:flex-row">
+            <div className={`flex min-h-[200px] flex-col lg:min-h-0 ${showPreview ? "lg:w-1/2" : "w-full"}`}>
+              <div className="border-b border-border px-4 py-2 text-[11px] font-medium uppercase tracking-wider text-muted">
                 Editor
               </div>
               <textarea
@@ -70,11 +71,11 @@ export default function StudioPage() {
             </div>
 
             {showPreview && (
-              <div className="flex w-1/2 flex-col border-l border-white/5">
-                <div className="border-b border-white/5 px-4 py-2 text-xs font-medium uppercase tracking-wider text-muted">
-                  Live Preview
+              <div className="flex min-h-[200px] flex-col border-t border-border lg:min-h-0 lg:w-1/2 lg:border-l lg:border-t-0">
+                <div className="border-b border-border px-4 py-2 text-[11px] font-medium uppercase tracking-wider text-muted">
+                  Preview
                 </div>
-                <div className="flex-1 overflow-auto p-6 prose prose-invert prose-sm max-w-none">
+                <div className="flex-1 overflow-auto p-4 prose prose-sm max-w-none sm:p-6 dark:prose-invert">
                   <PreviewContent content={content} />
                 </div>
               </div>
@@ -82,8 +83,8 @@ export default function StudioPage() {
           </div>
         </div>
 
-        <aside className="w-72 shrink-0 overflow-auto bg-surface p-4">
-          <div className="flex items-center gap-2 text-sm font-medium">
+        <aside className="hidden w-64 shrink-0 overflow-auto border-l border-border bg-background p-4 lg:block">
+          <div className="flex items-center gap-2 text-[13px] font-medium">
             <Sparkles className="h-4 w-4 text-electric-light" />
             AI Suggestions
           </div>
@@ -91,7 +92,7 @@ export default function StudioPage() {
             {suggestions.map((suggestion) => (
               <button
                 key={suggestion}
-                className="w-full rounded-lg border border-white/5 bg-white/[0.02] p-3 text-left text-sm transition-colors hover:border-electric/30 hover:bg-electric/5"
+                className="w-full rounded-md border border-border p-3 text-left text-[13px] transition-colors duration-200 hover:border-electric/30 hover:bg-electric/5"
               >
                 <Wand2 className="mb-2 h-4 w-4 text-electric-light" />
                 {suggestion}
@@ -99,8 +100,8 @@ export default function StudioPage() {
             ))}
           </div>
 
-          <GlassCard className="mt-6">
-            <h3 className="text-sm font-medium">Quick Actions</h3>
+          <Panel className="mt-6 p-4">
+            <h3 className="text-[13px] font-medium">Quick actions</h3>
             <div className="mt-3 space-y-2">
               <Button variant="secondary" size="sm" className="w-full justify-start">
                 Regenerate Section
@@ -112,7 +113,7 @@ export default function StudioPage() {
                 Improve Clarity
               </Button>
             </div>
-          </GlassCard>
+          </Panel>
         </aside>
       </div>
     </>
@@ -135,7 +136,7 @@ function PreviewContent({ content }: { content: string }) {
         elements.push(
           <pre
             key={`code-${i}`}
-            className="overflow-x-auto rounded-lg bg-white/5 p-4 text-sm"
+            className="overflow-x-auto rounded-lg bg-subtle p-4 text-sm"
           >
             <code>{codeLines.join("\n")}</code>
           </pre>
@@ -164,7 +165,7 @@ function PreviewContent({ content }: { content: string }) {
             <thead>
               <tr>
                 {tableRows[0]?.map((cell, j) => (
-                  <th key={j} className="border border-white/10 px-3 py-2 text-left">
+                  <th key={j} className="border border-border px-3 py-2 text-left">
                     {cell}
                   </th>
                 ))}
@@ -174,7 +175,7 @@ function PreviewContent({ content }: { content: string }) {
               {tableRows.slice(1).map((row, ri) => (
                 <tr key={ri}>
                   {row.map((cell, ci) => (
-                    <td key={ci} className="border border-white/10 px-3 py-2">
+                    <td key={ci} className="border border-border px-3 py-2">
                       {cell}
                     </td>
                   ))}
@@ -218,13 +219,13 @@ function PreviewContent({ content }: { content: string }) {
       );
     } else if (line.startsWith("`") && line.endsWith("`") && !line.includes(" ")) {
       elements.push(
-        <code key={i} className="rounded bg-white/5 px-1.5 py-0.5 text-electric-light">
+        <code key={i} className="rounded bg-subtle px-1.5 py-0.5 text-electric-light">
           {line.slice(1, -1)}
         </code>
       );
     } else if (line.trim()) {
       elements.push(
-        <p key={i} className="text-sm leading-relaxed text-white/80">
+        <p key={i} className="text-sm leading-relaxed text-foreground/80">
           {line}
         </p>
       );

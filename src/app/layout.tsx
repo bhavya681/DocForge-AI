@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/shared/theme-provider";
+import { ThemeScript } from "@/components/shared/theme-script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -24,6 +26,16 @@ export const metadata: Metadata = {
     "README generator",
     "architecture diagrams",
   ],
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
+  openGraph: {
+    title: "DocForge AI — Documentation That Writes Itself",
+    description:
+      "Connect your repository and generate READMEs, API docs, architecture diagrams, and deployment guides in minutes.",
+    images: [{ url: "/logo.png", width: 512, height: 512, alt: "DocForge AI" }],
+  },
 };
 
 export default function RootLayout({
@@ -35,9 +47,13 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-black text-white">
-        {children}
+      <head>
+        <ThemeScript />
+      </head>
+      <body className="min-h-full flex flex-col bg-background text-foreground">
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
