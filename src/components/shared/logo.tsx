@@ -11,7 +11,7 @@ const sizes = {
 interface LogoProps {
   size?: keyof typeof sizes;
   showWordmark?: boolean;
-  href?: string;
+  href?: string | null;
   className?: string;
   priority?: boolean;
 }
@@ -57,6 +57,10 @@ export function Logo({
         {content}
       </Link>
     );
+  }
+
+  if (href === null) {
+    return content;
   }
 
   return content;

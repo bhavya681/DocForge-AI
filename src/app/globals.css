@@ -79,7 +79,14 @@ html {
 
 section[id],
 [id="faq"] {
-  scroll-margin-top: 5rem;
+  scroll-margin-top: 6rem;
+}
+
+@media (min-width: 768px) {
+  section[id],
+  [id="faq"] {
+    scroll-margin-top: 5.5rem;
+  }
 }
 
 html,
