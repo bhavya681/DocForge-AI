@@ -77,6 +77,11 @@ html {
   scroll-behavior: smooth;
 }
 
+section[id],
+[id="faq"] {
+  scroll-margin-top: 5rem;
+}
+
 html,
 body {
   transition:

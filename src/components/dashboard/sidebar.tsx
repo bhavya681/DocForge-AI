@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
+import { useTheme } from "@/components/shared/theme-provider";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -26,12 +27,13 @@ const navItems = [
 
 export function DashboardSidebar() {
   const pathname = usePathname();
+  const { theme } = useTheme();
 
   return (
     <>
       <aside className="fixed left-0 top-0 z-40 hidden h-screen w-[220px] flex-col border-r border-border bg-background md:flex">
         <div className="flex h-14 items-center border-b border-border px-4">
-          <Logo size="sm" />
+          <Logo size="sm" showWordmark={theme === "light"} />
         </div>
 
         <nav className="flex-1 space-y-0.5 p-3">
